@@ -103,15 +103,24 @@
       <div class="flex flex-col md:flex-row md:items-center justify-between">
         <div class="mb-4 md:mb-0">
           <h2 class="font-semibold text-lg">Bug Reports</h2>
-          <p class="text-sm text-gray-600 mt-1">17 reported issues. Filter by status or severity.</p>
+          <p class="text-sm text-gray-600 mt-1"><span id="totalIssues">17</span> reported issues. Showing <span id="showingInfo">1-5</span>.</p>
         </div>
         <div class="flex flex-wrap gap-3">
           <div class="flex items-center gap-2">
             <label class="text-sm text-gray-600">Filter:</label>
-            <select class="text-sm border border-gray-300 rounded-lg px-3 py-2">
-              <option>All Issues</option>
-              <option>Open Only</option>
-              <option>Resolved</option>
+            <select id="statusFilter" class="text-sm border border-gray-300 rounded-lg px-3 py-2">
+              <option value="all">All Issues</option>
+              <option value="open">Open Only</option>
+              <option value="resolved">Resolved</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2">
+            <label class="text-sm text-gray-600">Severity:</label>
+            <select id="severityFilter" class="text-sm border border-gray-300 rounded-lg px-3 py-2">
+              <option value="all">All</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
             </select>
           </div>
           <div class="flex gap-2">
@@ -130,211 +139,13 @@
 
     <!-- Issues List -->
     <section id="issues" class="space-y-6">
-      <!-- Issue 1 -->
-      <article class="bg-white rounded-xl shadow-sm border-l-4 border-red-500" data-id="1">
-        <div class="p-5">
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <div class="flex items-start gap-3">
-                <div class="mt-1">
-                  <span class="inline-flex items-center justify-center w-6 h-6 bg-red-100 text-red-700 rounded-full text-xs font-bold">1</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-lg">Forgot-password: missing table `password_reset_tokens`</h3>
-                  <p class="text-gray-600 mt-2">On <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">/forgot-password</code> SQL error: <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">SQLSTATE[42S02]: Table 'pos.password_reset_tokens' doesn't exist</code> when trying to delete token.</p>
-                  <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                      <i class="fas fa-database"></i> Database
-                    </span>
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      <i class="fas fa-user-lock"></i> Authentication
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-right ml-4">
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                <i class="fas fa-exclamation-triangle"></i> High
-              </span>
-              <div class="mt-3">
-                <button class="mark btn-status px-3 py-1.5 text-sm bg-gray-100 rounded-lg font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors" data-status="open">
-                  <i class="far fa-circle"></i> Open
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div class="lg:col-span-2">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Reproduction Steps & Notes</label>
-              <textarea class="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500" rows="4" placeholder="Add reproduction steps or additional notes...">Expected: password_reset_tokens table exists (or config uses password_resets). Possible cause: wrong migration/table name or using Jetstream/fortify config mismatch.</textarea>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Suggested Fix</label>
-              <div class="bg-blue-50 p-3 rounded-lg">
-                <ol class="text-sm text-gray-700 space-y-2 list-decimal ml-4">
-                  <li>Check migrations for <code class="bg-blue-100 px-1 py-0.5 rounded">password_resets</code> vs <code class="bg-blue-100 px-1 py-0.5 rounded">password_reset_tokens</code>.</li>
-                  <li>Run <code class="bg-blue-100 px-1 py-0.5 rounded">php artisan migrate</code> or adjust config <code class="bg-blue-100 px-1 py-0.5 rounded">auth.passwords</code> table name.</li>
-                  <li>Search for custom code deleting from <code class="bg-blue-100 px-1 py-0.5 rounded">password_reset_tokens</code> and update.</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-gray-50 px-5 py-3 rounded-b-xl border-t border-gray-200 flex justify-between items-center">
-          <div class="text-xs text-gray-500">
-            <i class="far fa-clock mr-1"></i> Created 2 days ago
-          </div>
-          <div class="flex gap-2">
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-edit"></i> Edit
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-comment"></i> Comment
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-user"></i> Assign
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Issue 2 -->
-      <article class="bg-white rounded-xl shadow-sm border-l-4 border-red-500" data-id="2">
-        <div class="p-5">
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <div class="flex items-start gap-3">
-                <div class="mt-1">
-                  <span class="inline-flex items-center justify-center w-6 h-6 bg-red-100 text-red-700 rounded-full text-xs font-bold">2</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-lg">Quicksection route logs out admin</h3>
-                  <p class="text-gray-600 mt-2">After login as admin, navigating to Quicksection immediately logs the user out.</p>
-                  <p class="text-xs text-gray-500 mt-2">Possible causes: middleware redirect, session guard mismatch, or CSRF/session domain problem.</p>
-                  <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                      <i class="fas fa-route"></i> Routing
-                    </span>
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      <i class="fas fa-user-lock"></i> Authentication
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-right ml-4">
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                <i class="fas fa-exclamation-triangle"></i> High
-              </span>
-              <div class="mt-3">
-                <button class="mark btn-status px-3 py-1.5 text-sm bg-gray-100 rounded-lg font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors" data-status="open">
-                  <i class="far fa-circle"></i> Open
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Suggested Checks</label>
-            <div class="bg-blue-50 p-3 rounded-lg">
-              <ul class="text-sm text-gray-700 space-y-2 list-disc ml-4">
-                <li>Inspect Quicksection controller for <code class="bg-blue-100 px-1 py-0.5 rounded">Auth::logout()</code> or <code class="bg-blue-100 px-1 py-0.5 rounded">redirect()->guest()</code> calls.</li>
-                <li>Check session lifetime, domain, and cookie settings in <code class="bg-blue-100 px-1 py-0.5 rounded">config/session.php</code>.</li>
-                <li>Verify middleware stack — maybe route uses a different guard.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-gray-50 px-5 py-3 rounded-b-xl border-t border-gray-200 flex justify-between items-center">
-          <div class="text-xs text-gray-500">
-            <i class="far fa-clock mr-1"></i> Created 1 day ago
-          </div>
-          <div class="flex gap-2">
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-edit"></i> Edit
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-comment"></i> Comment
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-user"></i> Assign
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Issue 3 -->
-      <article class="bg-white rounded-xl shadow-sm border-l-4 border-yellow-500" data-id="3">
-        <div class="p-5">
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <div class="flex items-start gap-3">
-                <div class="mt-1">
-                  <span class="inline-flex items-center justify-center w-6 h-6 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">3</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-lg">Login page: error inside card not visible</h3>
-                  <p class="text-gray-600 mt-2">Validation or exception message appears but is hidden (not visible) inside login card.</p>
-                  <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
-                      <i class="fas fa-palette"></i> UI/UX
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-right ml-4">
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                <i class="fas fa-exclamation-circle"></i> Medium
-              </span>
-              <div class="mt-3">
-                <button class="mark btn-status px-3 py-1.5 text-sm bg-gray-100 rounded-lg font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors" data-status="open">
-                  <i class="far fa-circle"></i> Open
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5">
-            <p class="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg">Likely CSS z-index, color or padding issue with the theme. Ensure <code class="bg-blue-100 px-1 py-0.5 rounded">.alert</code> or error element uses visible color and z-index above background.</p>
-          </div>
-        </div>
-        
-        <div class="bg-gray-50 px-5 py-3 rounded-b-xl border-t border-gray-200 flex justify-between items-center">
-          <div class="text-xs text-gray-500">
-            <i class="far fa-clock mr-1"></i> Created 3 days ago
-          </div>
-          <div class="flex gap-2">
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-edit"></i> Edit
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-comment"></i> Comment
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-user"></i> Assign
-            </button>
-          </div>
-        </div>
-      </article>
+      <!-- Issues will be dynamically loaded here -->
     </section>
 
     <!-- Pagination -->
     <div class="mt-8 flex justify-center">
-      <nav class="flex items-center gap-1">
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="px-3 py-2 rounded-lg bg-primary-600 text-white">1</button>
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">2</button>
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">3</button>
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50">
-          <i class="fas fa-chevron-right"></i>
-        </button>
+      <nav id="pagination" class="flex items-center gap-1">
+        <!-- Pagination will be dynamically generated -->
       </nav>
     </div>
 
@@ -344,254 +155,356 @@
   </div>
 
   <script>
-    // Simple client-side status toggle and export
-    document.querySelectorAll('.btn-status').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const p = btn.closest('[data-id]');
-        const id = p.getAttribute('data-id');
-        const current = btn.getAttribute('data-status');
-        const next = current === 'open' ? 'resolved' : 'open';
-        btn.setAttribute('data-status', next);
-        
-        if (next === 'resolved') {
-          btn.innerHTML = '<i class="fas fa-check-circle"></i> Resolved';
-          btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-          btn.classList.add('bg-green-100', 'text-green-800', 'hover:bg-green-200');
-        } else {
-          btn.innerHTML = '<i class="far fa-circle"></i> Open';
-          btn.classList.remove('bg-green-100', 'text-green-800', 'hover:bg-green-200');
-          btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-        }
-      });
+    // All issues data
+    const allIssues = [
+      {
+        id: 1,
+        title: "Forgot-password: missing table `password_reset_tokens`",
+        description: "On <code>/forgot-password</code> SQL error: <code>SQLSTATE[42S02]: Table 'pos.password_reset_tokens' doesn't exist</code> when trying to delete token.",
+        reproduction: "Visit <code>http://127.0.0.1:8000/forgot-password</code> and submit test email.",
+        severity: "high",
+        status: "open",
+        tags: ["database", "authentication"],
+        notes: "Expected: password_reset_tokens table exists (or config uses password_resets). Possible cause: wrong migration/table name or using Jetstream/fortify config mismatch.",
+        suggestedFix: [
+          "Check migrations for <code>password_resets</code> vs <code>password_reset_tokens</code>.",
+          "Run `php artisan migrate` or adjust config `auth.passwords` table name.",
+          "Search for custom code deleting from `password_reset_tokens` and update."
+        ],
+        createdAt: "2 days ago"
+      },
+      {
+        id: 2,
+        title: "Quicksection route logs out admin",
+        description: "After login as admin, navigating to Quicksection immediately logs the user out.",
+        reproduction: "Possible causes: middleware redirect, session guard mismatch, or CSRF/session domain problem.",
+        severity: "high",
+        status: "open",
+        tags: ["routing", "authentication"],
+        notes: "",
+        suggestedFix: [
+          "Inspect Quicksection controller for `Auth::logout()` or `redirect()->guest()` calls.",
+          "Check session lifetime, domain, and cookie settings in <code>config/session.php</code>.",
+          "Verify middleware stack — maybe route uses a different guard."
+        ],
+        createdAt: "1 day ago"
+      },
+      {
+        id: 3,
+        title: "Login page: error inside card not visible",
+        description: "Validation or exception message appears but is hidden (not visible) inside login card.",
+        reproduction: "",
+        severity: "medium",
+        status: "open",
+        tags: ["ui/ux"],
+        notes: "",
+        suggestedFix: ["Likely CSS z-index, color or padding issue with the theme. Ensure `.alert` or error element uses visible color and z-index above background."],
+        createdAt: "3 days ago"
+      },
+      {
+        id: 4,
+        title: "Edit product — Custom Attributes form unsupported by black/white theme",
+        description: "The Custom Attributes section UI doesn't match the black-and-white admin theme; form controls look broken.",
+        reproduction: "",
+        severity: "low",
+        status: "open",
+        tags: ["ui/ux"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "4 days ago"
+      },
+      {
+        id: 5,
+        title: "View product — 'Add New Variant (SKUs)' header not hidden",
+        description: "Header visible even when variants are disabled or user lacks permission.",
+        reproduction: "",
+        severity: "low",
+        status: "open",
+        tags: ["ui/ux"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "5 days ago"
+      },
+      {
+        id: 6,
+        title: "User verification slow — PHP max execution time exceeded (30s)",
+        description: "Verifying newly created users takes 30–40s and throws `Maximum execution time of 30 seconds exceeded`.",
+        reproduction: "",
+        severity: "high",
+        status: "open",
+        tags: ["performance"],
+        notes: "",
+        suggestedFix: ["Investigate long-running operations (external API calls, heavy DB queries, mail sending). Use queues for email, optimize queries, or increase PHP max_execution_time temporarily while debugging."],
+        createdAt: "6 days ago"
+      },
+      {
+        id: 7,
+        title: "Workspace: no validation for selecting start/end time",
+        description: "Users can pick an end time before start time; no validation present.",
+        reproduction: "",
+        severity: "medium",
+        status: "open",
+        tags: ["validation"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "1 week ago"
+      },
+      {
+        id: 8,
+        title: "User edit page — Disabled user toggle button not working",
+        description: "The \"Disable user\" button on user edit page does not change state or persist to backend.",
+        reproduction: "",
+        severity: "medium",
+        status: "open",
+        tags: ["ui/ux", "backend"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "1 week ago"
+      },
+      {
+        id: 9,
+        title: "Manage wallet — adding $30 to store fails: No query results for model [App\Models\Store]",
+        description: "When giving funds to a store, system throws `No query results for model [App\Models\Store]`.",
+        reproduction: "",
+        severity: "high",
+        status: "open",
+        tags: ["database", "backend"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "1 week ago"
+      },
+      {
+        id: 10,
+        title: "Wallet page error messages not matching theme",
+        description: "Error UI on wallet page doesn't follow theme styling (colors, placement).",
+        reproduction: "",
+        severity: "low",
+        status: "open",
+        tags: ["ui/ux"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "1 week ago"
+      },
+      {
+        id: 11,
+        title: "Locked store: forgot PIN flow returns 'incorrect pin' and redirects to login",
+        description: "After requesting forgot PIN email and pasting the PIN, system says incorrect PIN and sends user to login page.",
+        reproduction: "",
+        severity: "high",
+        status: "open",
+        tags: ["authentication"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "2 weeks ago"
+      },
+      {
+        id: 12,
+        title: "Device created by admin becomes custom device, not global",
+        description: "Creating a device as admin results in device scoped to custom/device table rather than global devices table.",
+        reproduction: "",
+        severity: "medium",
+        status: "open",
+        tags: ["backend"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "2 weeks ago"
+      },
+      {
+        id: 13,
+        title: "Purchase route: clearForm button prevents form reopening",
+        description: "After clicking clearForm on purchase page, the form won't open again without page reload.",
+        reproduction: "",
+        severity: "medium",
+        status: "open",
+        tags: ["ui/ux"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "2 weeks ago"
+      },
+      {
+        id: 14,
+        title: "Customers route shows two active sidebar menu items",
+        description: "When on customers route, two items in the sidebar are styled as active.",
+        reproduction: "",
+        severity: "low",
+        status: "open",
+        tags: ["ui/ux"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "3 weeks ago"
+      },
+      {
+        id: 15,
+        title: "Attendance page design broken: <code>/attendance/index</code>",
+        description: "Design/layout not rendering as expected on the attendance index route.",
+        reproduction: "",
+        severity: "low",
+        status: "open",
+        tags: ["ui/ux"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "3 weeks ago"
+      },
+      {
+        id: 16,
+        title: "Repairing category: inserting job fails — foreign key null",
+        description: "Error: <code>Column 'repairing_category_id' cannot be null</code> when inserting into <code>pos_repairing_category_jobs</code>.",
+        reproduction: "",
+        severity: "high",
+        status: "open",
+        tags: ["database"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "3 weeks ago"
+      },
+      {
+        id: 17,
+        title: "Munshiin panel: organizations table missing when giving funds",
+        description: "SQL error: <code>Table 'pos.organizations' doesn't exist</code> when trying to give funds to an organization.",
+        reproduction: "",
+        severity: "high",
+        status: "open",
+        tags: ["database"],
+        notes: "",
+        suggestedFix: [],
+        createdAt: "1 month ago"
+      }
+    ];
+
+    // Pagination settings
+    let currentPage = 1;
+    const issuesPerPage = 5;
+    let filteredIssues = [...allIssues];
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', function() {
+      renderIssues();
+      setupEventListeners();
     });
 
-    function collectReport(){
-      const issues = [];
-      document.querySelectorAll('#issues article').forEach(a=>{
-        const id = a.getAttribute('data-id');
-        const title = a.querySelector('h3').innerText;
-        const statusBtn = a.querySelector('.btn-status');
-        const status = statusBtn ? statusBtn.getAttribute('data-status') : 'open';
-        const notesEl = a.querySelector('textarea');
-        const notes = notesEl ? notesEl.value : '';
-        issues.push({id,title,status,notes});
+    // Render issues based on current page and filters
+    function renderIssues() {
+      const issuesContainer = document.getElementById('issues');
+      issuesContainer.innerHTML = '';
+
+      // Calculate pagination
+      const startIndex = (currentPage - 1) * issuesPerPage;
+      const endIndex = startIndex + issuesPerPage;
+      const issuesToShow = filteredIssues.slice(startIndex, endIndex);
+
+      // Update showing info
+      document.getElementById('showingInfo').textContent = 
+        `${startIndex + 1}-${Math.min(endIndex, filteredIssues.length)}`;
+
+      // Render each issue
+      issuesToShow.forEach(issue => {
+        const issueElement = createIssueElement(issue);
+        issuesContainer.appendChild(issueElement);
       });
-      return {generatedAt:new Date().toISOString(),issues};
+
+      // Render pagination
+      renderPagination();
     }
 
-    document.getElementById('exportJson').addEventListener('click', ()=>{
-      const data = collectReport();
-      const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'pos-bug-report.json'; a.click();
-      URL.revokeObjectURL(url);
-    });
+    // Create HTML for a single issue
+    function createIssueElement(issue) {
+      const article = document.createElement('article');
+      article.className = `bg-white rounded-xl shadow-sm border-l-4 ${getSeverityBorderColor(issue.severity)}`;
+      article.setAttribute('data-id', issue.id);
 
-    document.getElementById('copyMarkdown').addEventListener('click', ()=>{
-      const data = collectReport();
-      let md = `# POS Bug Report — ${new Date().toLocaleString()}\n\n`;
-      data.issues.forEach(i=>{
-        md += `## ${i.id}. ${i.title}\nStatus: ${i.status}\nNotes:\n${i.notes}\n\n`;
-      });
-      navigator.clipboard.writeText(md).then(()=>{
-        const originalText = document.getElementById('copyMarkdown').innerHTML;
-        document.getElementById('copyMarkdown').innerHTML = '<i class="fas fa-check"></i> Copied!';
-        setTimeout(() => {
-          document.getElementById('copyMarkdown').innerHTML = originalText;
-        }, 2000);
-      });
-    });
-  </script>
-</body>
-</html><!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>POS Project — Bug Tracker (Enhanced)</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-            }
-          }
+      // Severity badge
+      const severityBadge = {
+        high: { class: 'bg-red-100 text-red-800', icon: 'exclamation-triangle' },
+        medium: { class: 'bg-yellow-100 text-yellow-800', icon: 'exclamation-circle' },
+        low: { class: 'bg-blue-100 text-blue-800', icon: 'info-circle' }
+      }[issue.severity];
+
+      // Status button
+      const statusButton = {
+        open: { class: 'bg-gray-100 hover:bg-gray-200', icon: 'far fa-circle', text: 'Open' },
+        resolved: { class: 'bg-green-100 text-green-800 hover:bg-green-200', icon: 'fas fa-check-circle', text: 'Resolved' }
+      }[issue.status];
+
+      // Tags
+      const tagsHtml = issue.tags.map(tag => {
+        const tagConfig = {
+          'database': { class: 'bg-red-100 text-red-800', icon: 'database' },
+          'authentication': { class: 'bg-blue-100 text-blue-800', icon: 'user-lock' },
+          'routing': { class: 'bg-purple-100 text-purple-800', icon: 'route' },
+          'ui/ux': { class: 'bg-pink-100 text-pink-800', icon: 'palette' },
+          'performance': { class: 'bg-orange-100 text-orange-800', icon: 'tachometer-alt' },
+          'validation': { class: 'bg-teal-100 text-teal-800', icon: 'check-double' },
+          'backend': { class: 'bg-indigo-100 text-indigo-800', icon: 'server' }
+        }[tag] || { class: 'bg-gray-100 text-gray-800', icon: 'tag' };
+        
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${tagConfig.class}">
+                  <i class="fas fa-${tagConfig.icon}"></i> ${tag.charAt(0).toUpperCase() + tag.slice(1)}
+                </span>`;
+      }).join('');
+
+      // Suggested fix
+      let suggestedFixHtml = '';
+      if (issue.suggestedFix && issue.suggestedFix.length > 0) {
+        if (typeof issue.suggestedFix === 'string') {
+          suggestedFixHtml = `<p class="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg">${issue.suggestedFix}</p>`;
+        } else {
+          suggestedFixHtml = `
+            <div class="bg-blue-50 p-3 rounded-lg">
+              <ol class="text-sm text-gray-700 space-y-2 list-decimal ml-4">
+                ${issue.suggestedFix.map(fix => `<li>${fix}</li>`).join('')}
+              </ol>
+            </div>
+          `;
         }
       }
-    }
-  </script>
-</head>
-<body class="bg-gray-50 text-gray-900">
-  <div class="max-w-6xl mx-auto p-6">
-    <!-- Header -->
-    <header class="mb-8 bg-white rounded-xl shadow-sm p-6 border-l-4 border-primary-600">
-      <div class="flex flex-col md:flex-row md:items-center justify-between">
-        <div>
-          <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
-            <i class="fas fa-bug text-primary-600"></i>
-            POS Project — Bug Tracker
-          </h1>
-          <p class="text-gray-600 mt-2">Track, prioritize, and resolve issues efficiently. Add notes, set severity, and assign fixes.</p>
-        </div>
-        <div class="mt-4 md:mt-0">
-          <div class="flex items-center gap-2 text-sm">
-            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full font-medium">
-              <i class="fas fa-circle text-xs mr-1"></i> Active
-            </span>
-            <span class="text-gray-500">Last updated: Today</span>
-          </div>
-        </div>
-      </div>
-    </header>
 
-    <!-- Stats & Actions -->
-    <section class="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-      <div class="bg-white rounded-xl shadow-sm p-4 border-t-4 border-red-500">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-500">Critical Issues</p>
-            <p class="text-2xl font-bold text-gray-800">7</p>
-          </div>
-          <div class="p-3 bg-red-100 rounded-lg">
-            <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-white rounded-xl shadow-sm p-4 border-t-4 border-yellow-500">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-500">Medium Issues</p>
-            <p class="text-2xl font-bold text-gray-800">6</p>
-          </div>
-          <div class="p-3 bg-yellow-100 rounded-lg">
-            <i class="fas fa-exclamation-circle text-yellow-600 text-xl"></i>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-white rounded-xl shadow-sm p-4 border-t-4 border-blue-500">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-500">Low Issues</p>
-            <p class="text-2xl font-bold text-gray-800">4</p>
-          </div>
-          <div class="p-3 bg-blue-100 rounded-lg">
-            <i class="fas fa-info-circle text-blue-600 text-xl"></i>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-white rounded-xl shadow-sm p-4 border-t-4 border-green-500">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-sm font-medium text-gray-500">Resolved</p>
-            <p class="text-2xl font-bold text-gray-800">0</p>
-          </div>
-          <div class="p-3 bg-green-100 rounded-lg">
-            <i class="fas fa-check-circle text-green-600 text-xl"></i>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Filters & Actions -->
-    <section class="mb-6 bg-white p-4 rounded-xl shadow-sm">
-      <div class="flex flex-col md:flex-row md:items-center justify-between">
-        <div class="mb-4 md:mb-0">
-          <h2 class="font-semibold text-lg">Bug Reports</h2>
-          <p class="text-sm text-gray-600 mt-1">17 reported issues. Filter by status or severity.</p>
-        </div>
-        <div class="flex flex-wrap gap-3">
-          <div class="flex items-center gap-2">
-            <label class="text-sm text-gray-600">Filter:</label>
-            <select class="text-sm border border-gray-300 rounded-lg px-3 py-2">
-              <option>All Issues</option>
-              <option>Open Only</option>
-              <option>Resolved</option>
-            </select>
-          </div>
-          <div class="flex gap-2">
-            <button id="exportJson" class="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-primary-700 transition-colors">
-              <i class="fas fa-file-export"></i>
-              Export JSON
-            </button>
-            <button id="copyMarkdown" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-gray-50 transition-colors">
-              <i class="fas fa-copy"></i>
-              Copy Markdown
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Issues List -->
-    <section id="issues" class="space-y-6">
-      <!-- Issue 1 -->
-      <article class="bg-white rounded-xl shadow-sm border-l-4 border-red-500" data-id="1">
+      article.innerHTML = `
         <div class="p-5">
           <div class="flex items-start justify-between">
             <div class="flex-1">
               <div class="flex items-start gap-3">
                 <div class="mt-1">
-                  <span class="inline-flex items-center justify-center w-6 h-6 bg-red-100 text-red-700 rounded-full text-xs font-bold">1</span>
+                  <span class="inline-flex items-center justify-center w-6 h-6 ${getSeverityBgColor(issue.severity)} ${getSeverityTextColor(issue.severity)} rounded-full text-xs font-bold">${issue.id}</span>
                 </div>
                 <div class="flex-1">
-                  <h3 class="font-semibold text-lg">Forgot-password: missing table `password_reset_tokens`</h3>
-                  <p class="text-gray-600 mt-2">On <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">/forgot-password</code> SQL error: <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">SQLSTATE[42S02]: Table 'pos.password_reset_tokens' doesn't exist</code> when trying to delete token.</p>
+                  <h3 class="font-semibold text-lg">${issue.title}</h3>
+                  <p class="text-gray-600 mt-2">${issue.description}</p>
+                  ${issue.reproduction ? `<p class="text-xs text-gray-500 mt-2">${issue.reproduction}</p>` : ''}
                   <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                      <i class="fas fa-database"></i> Database
-                    </span>
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      <i class="fas fa-user-lock"></i> Authentication
-                    </span>
+                    ${tagsHtml}
                   </div>
                 </div>
               </div>
             </div>
             <div class="text-right ml-4">
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                <i class="fas fa-exclamation-triangle"></i> High
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${severityBadge.class}">
+                <i class="fas fa-${severityBadge.icon}"></i> ${issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)}
               </span>
               <div class="mt-3">
-                <button class="mark btn-status px-3 py-1.5 text-sm bg-gray-100 rounded-lg font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors" data-status="open">
-                  <i class="far fa-circle"></i> Open
+                <button class="mark btn-status px-3 py-1.5 text-sm rounded-lg font-medium flex items-center gap-2 transition-colors ${statusButton.class}" data-status="${issue.status}" data-id="${issue.id}">
+                  <i class="${statusButton.icon}"></i> ${statusButton.text}
                 </button>
               </div>
             </div>
           </div>
 
+          ${issue.notes || (issue.suggestedFix && issue.suggestedFix.length > 0) ? `
           <div class="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div class="lg:col-span-2">
               <label class="block text-sm font-medium text-gray-700 mb-2">Reproduction Steps & Notes</label>
-              <textarea class="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500" rows="4" placeholder="Add reproduction steps or additional notes...">Expected: password_reset_tokens table exists (or config uses password_resets). Possible cause: wrong migration/table name or using Jetstream/fortify config mismatch.</textarea>
+              <textarea class="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500" rows="3" placeholder="Add reproduction steps or additional notes..." data-id="${issue.id}">${issue.notes || ''}</textarea>
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Suggested Fix</label>
-              <div class="bg-blue-50 p-3 rounded-lg">
-                <ol class="text-sm text-gray-700 space-y-2 list-decimal ml-4">
-                  <li>Check migrations for <code class="bg-blue-100 px-1 py-0.5 rounded">password_resets</code> vs <code class="bg-blue-100 px-1 py-0.5 rounded">password_reset_tokens</code>.</li>
-                  <li>Run <code class="bg-blue-100 px-1 py-0.5 rounded">php artisan migrate</code> or adjust config <code class="bg-blue-100 px-1 py-0.5 rounded">auth.passwords</code> table name.</li>
-                  <li>Search for custom code deleting from <code class="bg-blue-100 px-1 py-0.5 rounded">password_reset_tokens</code> and update.</li>
-                </ol>
-              </div>
+              ${suggestedFixHtml}
             </div>
           </div>
+          ` : ''}
         </div>
         
         <div class="bg-gray-50 px-5 py-3 rounded-b-xl border-t border-gray-200 flex justify-between items-center">
           <div class="text-xs text-gray-500">
-            <i class="far fa-clock mr-1"></i> Created 2 days ago
+            <i class="far fa-clock mr-1"></i> Created ${issue.createdAt}
           </div>
           <div class="flex gap-2">
             <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
@@ -605,209 +518,218 @@
             </button>
           </div>
         </div>
-      </article>
+      `;
 
-      <!-- Issue 2 -->
-      <article class="bg-white rounded-xl shadow-sm border-l-4 border-red-500" data-id="2">
-        <div class="p-5">
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <div class="flex items-start gap-3">
-                <div class="mt-1">
-                  <span class="inline-flex items-center justify-center w-6 h-6 bg-red-100 text-red-700 rounded-full text-xs font-bold">2</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-lg">Quicksection route logs out admin</h3>
-                  <p class="text-gray-600 mt-2">After login as admin, navigating to Quicksection immediately logs the user out.</p>
-                  <p class="text-xs text-gray-500 mt-2">Possible causes: middleware redirect, session guard mismatch, or CSRF/session domain problem.</p>
-                  <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                      <i class="fas fa-route"></i> Routing
-                    </span>
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      <i class="fas fa-user-lock"></i> Authentication
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-right ml-4">
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                <i class="fas fa-exclamation-triangle"></i> High
-              </span>
-              <div class="mt-3">
-                <button class="mark btn-status px-3 py-1.5 text-sm bg-gray-100 rounded-lg font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors" data-status="open">
-                  <i class="far fa-circle"></i> Open
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Suggested Checks</label>
-            <div class="bg-blue-50 p-3 rounded-lg">
-              <ul class="text-sm text-gray-700 space-y-2 list-disc ml-4">
-                <li>Inspect Quicksection controller for <code class="bg-blue-100 px-1 py-0.5 rounded">Auth::logout()</code> or <code class="bg-blue-100 px-1 py-0.5 rounded">redirect()->guest()</code> calls.</li>
-                <li>Check session lifetime, domain, and cookie settings in <code class="bg-blue-100 px-1 py-0.5 rounded">config/session.php</code>.</li>
-                <li>Verify middleware stack — maybe route uses a different guard.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-gray-50 px-5 py-3 rounded-b-xl border-t border-gray-200 flex justify-between items-center">
-          <div class="text-xs text-gray-500">
-            <i class="far fa-clock mr-1"></i> Created 1 day ago
-          </div>
-          <div class="flex gap-2">
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-edit"></i> Edit
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-comment"></i> Comment
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-user"></i> Assign
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Issue 3 -->
-      <article class="bg-white rounded-xl shadow-sm border-l-4 border-yellow-500" data-id="3">
-        <div class="p-5">
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <div class="flex items-start gap-3">
-                <div class="mt-1">
-                  <span class="inline-flex items-center justify-center w-6 h-6 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">3</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-lg">Login page: error inside card not visible</h3>
-                  <p class="text-gray-600 mt-2">Validation or exception message appears but is hidden (not visible) inside login card.</p>
-                  <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
-                      <i class="fas fa-palette"></i> UI/UX
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-right ml-4">
-              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                <i class="fas fa-exclamation-circle"></i> Medium
-              </span>
-              <div class="mt-3">
-                <button class="mark btn-status px-3 py-1.5 text-sm bg-gray-100 rounded-lg font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors" data-status="open">
-                  <i class="far fa-circle"></i> Open
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5">
-            <p class="text-sm text-gray-700 bg-blue-50 p-3 rounded-lg">Likely CSS z-index, color or padding issue with the theme. Ensure <code class="bg-blue-100 px-1 py-0.5 rounded">.alert</code> or error element uses visible color and z-index above background.</p>
-          </div>
-        </div>
-        
-        <div class="bg-gray-50 px-5 py-3 rounded-b-xl border-t border-gray-200 flex justify-between items-center">
-          <div class="text-xs text-gray-500">
-            <i class="far fa-clock mr-1"></i> Created 3 days ago
-          </div>
-          <div class="flex gap-2">
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-edit"></i> Edit
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-comment"></i> Comment
-            </button>
-            <button class="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              <i class="far fa-user"></i> Assign
-            </button>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <!-- Pagination -->
-    <div class="mt-8 flex justify-center">
-      <nav class="flex items-center gap-1">
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="px-3 py-2 rounded-lg bg-primary-600 text-white">1</button>
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">2</button>
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">3</button>
-        <button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-      </nav>
-    </div>
-
-    <footer class="mt-10 text-center text-sm text-gray-600 border-t border-gray-200 pt-6">
-      <p>Tip: I can convert this to a Blade template or generate specific fixes (migrations, validation rules, controllers). Tell me which items to prioritize and I'll produce code patches.</p>
-    </footer>
-  </div>
-
-  <script>
-    // Simple client-side status toggle and export
-    document.querySelectorAll('.btn-status').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const p = btn.closest('[data-id]');
-        const id = p.getAttribute('data-id');
-        const current = btn.getAttribute('data-status');
-        const next = current === 'open' ? 'resolved' : 'open';
-        btn.setAttribute('data-status', next);
-        
-        if (next === 'resolved') {
-          btn.innerHTML = '<i class="fas fa-check-circle"></i> Resolved';
-          btn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-          btn.classList.add('bg-green-100', 'text-green-800', 'hover:bg-green-200');
-        } else {
-          btn.innerHTML = '<i class="far fa-circle"></i> Open';
-          btn.classList.remove('bg-green-100', 'text-green-800', 'hover:bg-green-200');
-          btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-        }
-      });
-    });
-
-    function collectReport(){
-      const issues = [];
-      document.querySelectorAll('#issues article').forEach(a=>{
-        const id = a.getAttribute('data-id');
-        const title = a.querySelector('h3').innerText;
-        const statusBtn = a.querySelector('.btn-status');
-        const status = statusBtn ? statusBtn.getAttribute('data-status') : 'open';
-        const notesEl = a.querySelector('textarea');
-        const notes = notesEl ? notesEl.value : '';
-        issues.push({id,title,status,notes});
-      });
-      return {generatedAt:new Date().toISOString(),issues};
+      return article;
     }
 
-    document.getElementById('exportJson').addEventListener('click', ()=>{
-      const data = collectReport();
-      const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    // Render pagination controls
+    function renderPagination() {
+      const paginationContainer = document.getElementById('pagination');
+      const totalPages = Math.ceil(filteredIssues.length / issuesPerPage);
+      
+      if (totalPages <= 1) {
+        paginationContainer.innerHTML = '';
+        return;
+      }
+
+      let paginationHtml = '';
+
+      // Previous button
+      if (currentPage > 1) {
+        paginationHtml += `<button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 prev-page">
+                            <i class="fas fa-chevron-left"></i>
+                          </button>`;
+      } else {
+        paginationHtml += `<button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-300 cursor-not-allowed" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                          </button>`;
+      }
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === currentPage) {
+          paginationHtml += `<button class="px-3 py-2 rounded-lg bg-primary-600 text-white current-page">${i}</button>`;
+        } else {
+          paginationHtml += `<button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 page-number" data-page="${i}">${i}</button>`;
+        }
+      }
+
+      // Next button
+      if (currentPage < totalPages) {
+        paginationHtml += `<button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 next-page">
+                            <i class="fas fa-chevron-right"></i>
+                          </button>`;
+      } else {
+        paginationHtml += `<button class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-300 cursor-not-allowed" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                          </button>`;
+      }
+
+      paginationContainer.innerHTML = paginationHtml;
+
+      // Add event listeners to pagination buttons
+      document.querySelectorAll('.page-number').forEach(button => {
+        button.addEventListener('click', () => {
+          currentPage = parseInt(button.getAttribute('data-page'));
+          renderIssues();
+        });
+      });
+
+      document.querySelector('.prev-page')?.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderIssues();
+        }
+      });
+
+      document.querySelector('.next-page')?.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderIssues();
+        }
+      });
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Status filter
+      document.getElementById('statusFilter').addEventListener('change', function() {
+        applyFilters();
+      });
+
+      // Severity filter
+      document.getElementById('severityFilter').addEventListener('change', function() {
+        applyFilters();
+      });
+
+      // Status toggle
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btn-status') || e.target.closest('.btn-status')) {
+          const button = e.target.classList.contains('btn-status') ? e.target : e.target.closest('.btn-status');
+          const issueId = parseInt(button.getAttribute('data-id'));
+          const currentStatus = button.getAttribute('data-status');
+          const newStatus = currentStatus === 'open' ? 'resolved' : 'open';
+          
+          // Update in our data
+          const issueIndex = allIssues.findIndex(issue => issue.id === issueId);
+          if (issueIndex !== -1) {
+            allIssues[issueIndex].status = newStatus;
+          }
+          
+          // Re-render
+          applyFilters();
+        }
+      });
+
+      // Notes saving
+      document.addEventListener('input', function(e) {
+        if (e.target.tagName === 'TEXTAREA' && e.target.hasAttribute('data-id')) {
+          const issueId = parseInt(e.target.getAttribute('data-id'));
+          const notes = e.target.value;
+          
+          // Update in our data
+          const issueIndex = allIssues.findIndex(issue => issue.id === issueId);
+          if (issueIndex !== -1) {
+            allIssues[issueIndex].notes = notes;
+          }
+        }
+      });
+
+      // Export buttons
+      document.getElementById('exportJson').addEventListener('click', exportJson);
+      document.getElementById('copyMarkdown').addEventListener('click', copyMarkdown);
+    }
+
+    // Apply filters
+    function applyFilters() {
+      const statusFilter = document.getElementById('statusFilter').value;
+      const severityFilter = document.getElementById('severityFilter').value;
+      
+      filteredIssues = allIssues.filter(issue => {
+        const statusMatch = statusFilter === 'all' || issue.status === statusFilter;
+        const severityMatch = severityFilter === 'all' || issue.severity === severityFilter;
+        return statusMatch && severityMatch;
+      });
+      
+      // Reset to first page when filters change
+      currentPage = 1;
+      renderIssues();
+    }
+
+    // Utility functions for styling
+    function getSeverityBorderColor(severity) {
+      return {
+        high: 'border-red-500',
+        medium: 'border-yellow-500',
+        low: 'border-blue-500'
+      }[severity];
+    }
+
+    function getSeverityBgColor(severity) {
+      return {
+        high: 'bg-red-100',
+        medium: 'bg-yellow-100',
+        low: 'bg-blue-100'
+      }[severity];
+    }
+
+    function getSeverityTextColor(severity) {
+      return {
+        high: 'text-red-700',
+        medium: 'text-yellow-700',
+        low: 'text-blue-700'
+      }[severity];
+    }
+
+    // Export functions
+    function exportJson() {
+      const data = {
+        generatedAt: new Date().toISOString(),
+        issues: allIssues.map(issue => ({
+          id: issue.id,
+          title: issue.title,
+          status: issue.status,
+          severity: issue.severity,
+          notes: issue.notes,
+          tags: issue.tags
+        }))
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'pos-bug-report.json'; a.click();
+      a.href = url;
+      a.download = 'pos-bug-report.json';
+      a.click();
       URL.revokeObjectURL(url);
-    });
+    }
 
-    document.getElementById('copyMarkdown').addEventListener('click', ()=>{
-      const data = collectReport();
+    function copyMarkdown() {
+      const data = {
+        generatedAt: new Date().toISOString(),
+        issues: allIssues
+      };
+      
       let md = `# POS Bug Report — ${new Date().toLocaleString()}\n\n`;
-      data.issues.forEach(i=>{
-        md += `## ${i.id}. ${i.title}\nStatus: ${i.status}\nNotes:\n${i.notes}\n\n`;
+      data.issues.forEach(issue => {
+        md += `## ${issue.id}. ${issue.title}\n`;
+        md += `**Status:** ${issue.status} | **Severity:** ${issue.severity}\n`;
+        md += `**Description:** ${issue.description.replace(/<code>/g, '`').replace(/<\/code>/g, '`')}\n`;
+        if (issue.notes) {
+          md += `**Notes:** ${issue.notes}\n`;
+        }
+        md += `**Tags:** ${issue.tags.join(', ')}\n\n`;
       });
-      navigator.clipboard.writeText(md).then(()=>{
+      
+      navigator.clipboard.writeText(md).then(() => {
         const originalText = document.getElementById('copyMarkdown').innerHTML;
         document.getElementById('copyMarkdown').innerHTML = '<i class="fas fa-check"></i> Copied!';
         setTimeout(() => {
           document.getElementById('copyMarkdown').innerHTML = originalText;
         }, 2000);
       });
-    });
+    }
   </script>
 </body>
 </html>
